@@ -23,16 +23,22 @@ namespace UDPSend
             var host = args[0];
             var port = Convert.ToInt32(args[1]);
             var data = args[2];
-
-            UdpClient udpClient = new UdpClient(host, port);
-            Byte[] sendBytes = Encoding.ASCII.GetBytes(data);
-            try
+            int count = 1;
+            if (args.Length > 3)
+                count = Convert.ToInt32(args[3]);
+            for (int i = 0; i < count; i++)
             {
-                udpClient.Send(sendBytes, sendBytes.Length);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
+                UdpClient udpClient = new UdpClient(host, port);
+                Byte[] sendBytes = Encoding.ASCII.GetBytes(data);
+                try
+                {
+                    udpClient.Send(sendBytes, sendBytes.Length);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                System.Threading.Thread.Sleep(250);
             }
         }
     }
